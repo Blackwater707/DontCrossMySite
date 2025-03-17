@@ -32,13 +32,6 @@
     <div id="output"></div>
 
     <script>
-        function generateFlag() {
-            // Flag components stored separately to prevent reconstruction via inspection
-            const part1 = String.fromCharCode(73, 71, 78, 73, 84, 69); // "IGNITE"
-            const part2 = "{VULN3R3BL3_S1T3_XSS}"; // Remaining flag
-            return part1 + part2;
-        }
-
         function processInput() {
             // Get user input
             const userInput = document.getElementById("userInput").value;
@@ -46,13 +39,15 @@
             // Reflect the input back to the page (vulnerable to XSS)
             document.getElementById("output").innerHTML = userInput;
 
-            // Check for a valid XSS payload (script with alert)
+            // Detect a valid XSS payload (script with alert)
             if (userInput.includes("<script>") && userInput.includes("alert")) {
-                // Dynamically generate the flag only when payload is executed
-                const flag = generateFlag();
-                alert("Congratulations! Here's your flag: " + flag);
+                // Generate the flag only after payload execution
+                setTimeout(() => {
+                    alert("Congratulations! Here's your flag: IGNITE{VULN3R3BL3_S1T3_XSS}");
+                }, 100); // Small delay to simulate runtime execution
             }
         }
     </script>
 </body>
 </html>
+
