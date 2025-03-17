@@ -32,6 +32,23 @@
     <div id="output"></div>
 
     <script>
+        function fetchFlag() {
+            fetch('flag.txt')
+                .then(response => {
+                    if (response.ok) {
+                        return response.text(); // Read the contents of flag.txt
+                    } else {
+                        throw new Error("Could not retrieve the flag!");
+                    }
+                })
+                .then(flag => {
+                    alert("Congratulations! Here's your flag: " + flag);
+                })
+                .catch(error => {
+                    console.error("Error fetching the flag:", error.message);
+                });
+        }
+
         function processInput() {
             // Get user input
             const userInput = document.getElementById("userInput").value;
@@ -39,15 +56,14 @@
             // Reflect the input back to the page (vulnerable to XSS)
             document.getElementById("output").innerHTML = userInput;
 
-            // Detect a valid XSS payload (script with alert)
+            // Check for a valid XSS payload (script with alert)
             if (userInput.includes("<script>") && userInput.includes("alert")) {
-                // Generate the flag only after payload execution
-                setTimeout(() => {
-                    alert("Congratulations! Here's your flag: IGNITE{VULN3R3BL3_S1T3_XSS}");
-                }, 100); // Small delay to simulate runtime execution
+                // Dynamically fetch and display the flag
+                fetchFlag();
             }
         }
     </script>
 </body>
 </html>
+
 
