@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>You CAN'T XSS ME</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            width: 300px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+        }
+        #output {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>You CAN'T XSS ME</h1>
+    <p>Try your best to break this input field!</p>
+    <input type="text" id="userInput" placeholder="Enter something here">
+    <button onclick="processInput()">Submit</button>
+    <div id="output"></div>
+
+    <script>
+        function processInput() {
+            // Get user input
+            const userInput = document.getElementById("userInput").value;
+            // Reflect the input back to the page (vulnerable to XSS)
+            document.getElementById("output").innerHTML = userInput;
+
+            // If the user successfully injects an alert, reveal the flag
+            if (userInput.includes("<script>") && userInput.includes("alert")) {
+                alert("Congratulations! Here's your flag: ;hu5/-.5bj]}(rXB4$;pk9]\)MF-kSV#");
+            }
+        }
+    </script>
+</body>
+</html>
